@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.Beperkt;
+
 
 /**
  * Servlet implementation class ProductServlet
@@ -34,6 +36,9 @@ public class ProductServlet extends HttpServlet {
 		response.getWriter().append(Index.voorraad.get(id).getPrijsPerEenheid() + " monetaire eenheden per ");
 		response.getWriter().append(Index.voorraad.get(id).getEenheidNaam() + ".");
 		response.getWriter().append("<h2>Bestellen</h2>");
+		if (request.getParameter("fout")!=null) {
+			response.getWriter().append("<p style=\"color:red\"> " + request.getParameter("fout") + " is geen geldig aantal.");
+		}
 		response.getWriter().append("<form method=\"post\" action=\"\">");
 		response.getWriter().append("Aantal: <input type=\"text\" name = \"aantal\">");
 		response.getWriter().append("<input type=\"submit\" value=\"bestel\">");
@@ -59,13 +64,20 @@ public class ProductServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Integer id = Integer.parseInt(request.getParameter("id"));
 		Integer aantal;
-		if (request.getParameter("aantal")!="") {
+		String redirect = "winkelwagen";
+		
+		if (!request.getParameter("aantal").matches("^[0-9]*$")) {
+			redirect= "product?id=" + id + "&fout=" + request.getParameter("aantal");
+			aantal = 0;
+		} else if  (Index.voorraad.get(id) instanceof Beperkt){ 
+			aantal = Math.min(2, Integer.parseInt(request.getParameter("aantal")));
+			Index.wagen.bestel(Index.voorraad.get(id), aantal);
+		} else {
 			aantal = Integer.parseInt(request.getParameter("aantal"));
-		} else { 
-			aantal = 1;
+			Index.wagen.bestel(Index.voorraad.get(id), aantal);
 		}
-		Index.wagen.bestel(Index.voorraad.get(id), aantal);
-		response.sendRedirect("winkelwagen");
+		
+		response.sendRedirect(redirect);
 	}
 
 
