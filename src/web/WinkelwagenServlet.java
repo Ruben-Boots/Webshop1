@@ -19,7 +19,8 @@ public class WinkelwagenServlet extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//response.getWriter().append("<body>" + Index.wagen.toString() + "</body>");
+		request.setAttribute("producten", Index.wagen);
+		request.setAttribute("aantal", Index.wagen.getLength());
 		request.getRequestDispatcher(
 			    "/WEB-INF/WinkelwagenMaker.jsp"
 			    ).forward(request, response);

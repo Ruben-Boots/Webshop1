@@ -13,6 +13,7 @@
 	</div>
 	
 	<div class="content">
+		${producten}
 	</div>
 	
 	<div class="picture">

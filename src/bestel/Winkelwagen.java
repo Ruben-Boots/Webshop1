@@ -14,9 +14,13 @@ public class Winkelwagen {
 	public String toString() {
 		String str = "";
 		for (ProductBestelling be:wagen) {
-			str += be +"\n";
+			str += "<p>" + be;
 		}
 		return str;
+	}
+	
+	public int getLength() {
+		return wagen.size();
 	}
 	
 	public int getTotaalprijs() {
