@@ -14,6 +14,8 @@
 	
 	<div class="content">
 		${producten}
+		<h2>Totaal:</h2>
+		<p>${producten.getTotaalPrijs()}
 	</div>
 	
 	<div class="picture">

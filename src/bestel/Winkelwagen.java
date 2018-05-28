@@ -23,7 +23,7 @@ public class Winkelwagen {
 		return wagen.size();
 	}
 	
-	public int getTotaalprijs() {
+	public int getTotaalPrijs() {
 		int totaal = 0;
 		for (ProductBestelling pb:wagen) {
 			totaal += pb.getPrijs();
