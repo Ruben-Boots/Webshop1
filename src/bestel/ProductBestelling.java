@@ -21,7 +21,11 @@ public class ProductBestelling {
 	}
 	
 	public int getPrijs() {
-		return product.getPrijsPerEenheid()*hoeveelheid;
+		if (product instanceof KwantumKorting) {
+			return product.getPrijs(hoeveelheid);
+		} else {
+			return product.getPrijsPerEenheid() * hoeveelheid;
+		}
 	}
 	
 	public String getNaam() {

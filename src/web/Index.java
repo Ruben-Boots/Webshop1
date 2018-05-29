@@ -36,12 +36,14 @@ public class Index extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		//if (!request.isRequestedSessionIdValid()) {
-		session.setAttribute("winkelwagen", new Winkelwagen());
-		//}
-		
 		response.getWriter().append("<html><head><link rel=\"stylesheet\" href=\"style.css\"></head><body>");
+		HttpSession session = request.getSession();
+		if (session.getAttribute("winkelwagen") == null) {
+			response.getWriter().append("nieuwe winkelwagen");
+			session.setAttribute("winkelwagen", new Winkelwagen());
+		}
+		
+		
 		
 		response.getWriter().append("<div class=\"grid-container\">");
 		response.getWriter().append("<div class=\"header\"><h1>Welkom in de webshop</h1></div>");

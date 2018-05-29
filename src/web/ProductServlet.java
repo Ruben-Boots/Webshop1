@@ -65,23 +65,22 @@ public class ProductServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Integer id = Integer.parseInt(request.getParameter("id"));
-		response.getWriter().append("" +id);
 		Integer aantal;
 		String redirect = "winkelwagen";
+		HttpSession session = request.getSession();
 
-
+		response.getWriter().append(session.getAttribute("winkelwagen").toString());
 		
 		if (!request.getParameter("aantal").matches("^[0-9]*$")) {
 			redirect= "product?id=" + id + "&fout=" + request.getParameter("aantal");
 			aantal = 0;
 		} else if  (Index.voorraad.get(id) instanceof Beperkt){ 
 			aantal = Math.min(2, Integer.parseInt(request.getParameter("aantal")));
-			//((Winkelwagen) session.getAttribute("winkelwagen")).bestel(Index.voorraad.get(id), aantal);
+			((Winkelwagen) session.getAttribute("winkelwagen")).bestel(Index.voorraad.get(id), aantal);
 		} else {
 			aantal = Integer.parseInt(request.getParameter("aantal"));
-			//((Winkelwagen) session.getAttribute("winkelwagen")).bestel(Index.voorraad.get(id), aantal);
+			((Winkelwagen) session.getAttribute("winkelwagen")).bestel(Index.voorraad.get(id), aantal);
 		}
-		response.getWriter().append("<body>aaaaaaaaaaaaaaaaaaaaaaaaa</body>");
 		response.sendRedirect(redirect);
 	}
 
