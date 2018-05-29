@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bestel.Winkelwagen;
 
@@ -18,7 +19,7 @@ import bestel.Winkelwagen;
 @WebServlet("/index.html")
 public class Index extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	static public Winkelwagen wagen = new Winkelwagen();
+	//static public Winkelwagen wagen = new Winkelwagen();
 	static ArrayList<Product> voorraad = new ArrayList<>();
 	{
 		voorraad.add(new DefaultProduct("Koffie"   ,20  ,"koffie.jpg"   ,2));
@@ -35,6 +36,11 @@ public class Index extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		//if (!request.isRequestedSessionIdValid()) {
+		session.setAttribute("winkelwagen", new Winkelwagen());
+		//}
+		
 		response.getWriter().append("<html><head><link rel=\"stylesheet\" href=\"style.css\"></head><body>");
 		
 		response.getWriter().append("<div class=\"grid-container\">");

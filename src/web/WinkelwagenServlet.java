@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 
 
@@ -19,8 +20,9 @@ public class WinkelwagenServlet extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setAttribute("producten", Index.wagen);
-		request.setAttribute("aantal", Index.wagen.getLength());
+		HttpSession session = request.getSession();
+		
+		request.setAttribute("producten", session.getAttribute("winkelwagen"));
 		request.getRequestDispatcher(
 			    "/WEB-INF/WinkelwagenMaker.jsp"
 			    ).forward(request, response);

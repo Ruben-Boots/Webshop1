@@ -73,7 +73,7 @@ img:hover {
 
 .grid-container {
 	display: grid;
-	grid-template-columns: 10% auto auto;
+	grid-template-columns: 10% 40% 40%;
 	grid-gap: 50px;
 	grid-lines: 3px solid black;
 }

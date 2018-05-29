@@ -6,7 +6,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import bestel.Winkelwagen;
 import model.Beperkt;
 
 
@@ -52,7 +54,7 @@ public class ProductServlet extends HttpServlet {
 		
 		response.getWriter().append("<div class=\"menu\">");
 		response.getWriter().append("<a href=\"index.html\"> Index </a>");
-		response.getWriter().append("<a href=\"winkelwagen.html\"> Winkelwagen </a>");
+		response.getWriter().append("<a href=\"winkelwagen\"> Winkelwagen </a>");
 		response.getWriter().append("</div>");
 		
 		response.getWriter().append("<div class=\"footer\"> <p>Dit is de voettekst van de mooiste webwinkel EVER!! </div>");		
@@ -63,20 +65,23 @@ public class ProductServlet extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Integer id = Integer.parseInt(request.getParameter("id"));
+		response.getWriter().append("" +id);
 		Integer aantal;
 		String redirect = "winkelwagen";
+
+
 		
 		if (!request.getParameter("aantal").matches("^[0-9]*$")) {
 			redirect= "product?id=" + id + "&fout=" + request.getParameter("aantal");
 			aantal = 0;
 		} else if  (Index.voorraad.get(id) instanceof Beperkt){ 
 			aantal = Math.min(2, Integer.parseInt(request.getParameter("aantal")));
-			Index.wagen.bestel(Index.voorraad.get(id), aantal);
+			//((Winkelwagen) session.getAttribute("winkelwagen")).bestel(Index.voorraad.get(id), aantal);
 		} else {
 			aantal = Integer.parseInt(request.getParameter("aantal"));
-			Index.wagen.bestel(Index.voorraad.get(id), aantal);
+			//((Winkelwagen) session.getAttribute("winkelwagen")).bestel(Index.voorraad.get(id), aantal);
 		}
-		
+		response.getWriter().append("<body>aaaaaaaaaaaaaaaaaaaaaaaaa</body>");
 		response.sendRedirect(redirect);
 	}
 
