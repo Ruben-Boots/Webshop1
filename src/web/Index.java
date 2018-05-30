@@ -38,8 +38,8 @@ public class Index extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().append("<html><head><link rel=\"stylesheet\" href=\"style.css\"></head><body>");
 		HttpSession session = request.getSession();
+		
 		if (session.getAttribute("winkelwagen") == null) {
-			response.getWriter().append("nieuwe winkelwagen");
 			session.setAttribute("winkelwagen", new Winkelwagen());
 		}
 		
